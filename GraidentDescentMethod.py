@@ -6,12 +6,12 @@ import matplotlib.pyplot as plt
 x = np.arange(-20,20,0.1)
 
 def f(x):
-    return x ** 2
+    return x * x
 
 plt.plot(x,f(x))
 
 def df(x):
-    descent = 2 * (x ** 1)
+    descent = 2 * x
     return descent
 
 def  tangent_func(x,x_0):
@@ -27,10 +27,8 @@ history_x=[x]
 
 while (abs(df(x)) > eta):
     #确定下降方向
-    if x > 0:
-        dx = -1
-    else:
-        dx = 1
+
+    dx = -df(x)
     #回溯直线搜索
     t = 1
     t_list.append(t)
@@ -39,9 +37,11 @@ while (abs(df(x)) > eta):
         t_list.append(t)
 
     #作图
-    xx = np.arange(x-10,x+10,1)
+    xx = np.arange(x-5,x+5,1)
+    print(tangent_func(xx,x))
     #plt.plot(xx, f(x)+alpha*t*df(x)*(xx-x),color='pink')
-    plt.plot(xx, tangent_func(xx, x), color='orange')
+    #y = k(x+a) + b, k = y'
+    plt.plot(xx, tangent_func(xx,x), color='orange')
 
     # 修改x
     x = x + t * dx
@@ -49,7 +49,6 @@ while (abs(df(x)) > eta):
     #descent = 2 * x
 
 print(history_x)
-print(type(history_x))
 history_x.reverse()
 plt.plot(np.array(history_x),f(np.array(history_x)),color="red",marker='*')
 plt.show()
